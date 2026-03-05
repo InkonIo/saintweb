@@ -1,0 +1,12 @@
+package com.schedule.app.enums;
+
+public enum AuditAction {
+    SCHEDULE_CREATED,
+    SCHEDULE_UPDATED,
+    SCHEDULE_SUBMITTED,
+    SCHEDULE_APPROVED,
+    SCHEDULE_REVISION,
+    SCHEDULE_ARCHIVED,
+    USER_REGISTERED,
+    USER_LOGIN
+}
