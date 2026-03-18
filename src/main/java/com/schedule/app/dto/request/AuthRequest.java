@@ -32,4 +32,28 @@ public class AuthRequest {
             @NotBlank(message = "Password is required")
             String password
     ) {}
+    public record ForgotPassword(
+            @NotBlank(message = "Email is required")
+            @Email(message = "Invalid email format")
+            String email
+    ) {}
+
+    public record VerifyCode(
+            @NotBlank(message = "Email is required")
+            @Email(message = "Invalid email format")
+            String email,
+
+            @NotBlank(message = "Code is required")
+            @Size(min = 5, max = 5, message = "Code must be 5 characters")
+            String code
+    ) {}
+
+    public record ResetPassword(
+            @NotBlank(message = "Reset token is required")
+            String resetToken,
+
+            @NotBlank(message = "Password is required")
+            @Size(min = 6, message = "Password must be at least 6 characters")
+            String newPassword
+    ) {}
 }
