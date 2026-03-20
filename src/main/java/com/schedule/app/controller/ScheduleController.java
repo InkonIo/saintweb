@@ -2,6 +2,7 @@ package com.schedule.app.controller;
 
 import com.schedule.app.dto.request.ScheduleRequest;
 import com.schedule.app.dto.response.ScheduleResponse;
+import com.schedule.app.service.ExportService;
 import com.schedule.app.service.ScheduleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -14,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/schedules")
@@ -23,7 +25,8 @@ import java.util.List;
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
-
+    private final com.schedule.app.service.ConflictService conflictService;
+    private final ExportService exportService;
     // ───────── GET ─────────
 
     @GetMapping
@@ -101,4 +104,29 @@ public class ScheduleController {
     public ResponseEntity<ScheduleResponse.Short> archive(@PathVariable Long id) {
         return ResponseEntity.ok(scheduleService.archiveSchedule(id));
     }
+
+        @GetMapping("/{id}/conflicts")
+    @Operation(summary = "Проверить конфликты графика")
+    public ResponseEntity<List<Map<String, Object>>> checkConflicts(@PathVariable Long id) {
+        return ResponseEntity.ok(conflictService.checkConflicts(id));
+    }
+    @GetMapping("/{id}/export/excel")
+@Operation(summary = "Экспорт графика в Excel")
+public ResponseEntity<byte[]> exportExcel(@PathVariable Long id) throws Exception {
+    byte[] data = exportService.exportExcel(id);
+    return ResponseEntity.ok()
+            .header("Content-Disposition", "attachment; filename=schedule-" + id + ".xlsx")
+            .header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+            .body(data);
+}
+
+@GetMapping("/{id}/export/pdf")
+@Operation(summary = "Экспорт графика в PDF")
+public ResponseEntity<byte[]> exportPdf(@PathVariable Long id) throws Exception {
+    byte[] data = exportService.exportPdf(id);
+    return ResponseEntity.ok()
+            .header("Content-Disposition", "attachment; filename=schedule-" + id + ".pdf")
+            .header("Content-Type", "application/pdf")
+            .body(data);
+}
 }
