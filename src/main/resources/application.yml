@@ -44,4 +44,8 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     operationsSorter: method
-  packages-to-scan: com.schedule.app.controller
+  packages-to-scan: com.schedule.app
+
+  openai:
+  api:
+    key: ${OPENAI_API_KEY}
