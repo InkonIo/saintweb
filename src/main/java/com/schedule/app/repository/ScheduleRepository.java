@@ -31,4 +31,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
             @Param("currentMonth") Short currentMonth,
             @Param("currentYear") Short currentYear
     );
+
+    @Query("SELECT s FROM Schedule s JOIN FETCH s.branch WHERE s.id = :id")
+    Optional<Schedule> findByIdWithBranch(@Param("id") Long id);
 }
