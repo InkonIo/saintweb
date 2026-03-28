@@ -14,5 +14,5 @@ public class AiChatRequest {
      * in the current wizard session. Example:
      * {"branchId": 5, "templateId": 12}
      */
-    private Map<String, Object> wizardCtx;
+    private Map<String, String> wizardCtx;
 }
