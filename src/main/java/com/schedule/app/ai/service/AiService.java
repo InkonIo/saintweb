@@ -263,9 +263,13 @@ public class AiService {
         }
     }
 
-    private void sendStatus(SseEmitter emitter, String message) throws Exception {
+    private void sendStatus(SseEmitter emitter, String message) {
+    try {
         emitter.send(SseEmitter.event().name("status").data(message));
+    } catch (Exception e) {
+        log.debug("SSE client disconnected during status send");
     }
+}
 
     private String callOpenAI(String prompt) throws Exception {
         String requestBody = objectMapper.writeValueAsString(Map.of(

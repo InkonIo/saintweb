@@ -1,7 +1,10 @@
 package com.schedule.app.dto.request;
 
+import java.util.List;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 public class EmployeeRequest {
 
@@ -27,4 +30,10 @@ public class EmployeeRequest {
             String position,
             Boolean isActive
     ) {}
+
+        @Data
+        public static class Batch {
+            private List<Create> employees;
+            private Long branchId;
+        }
 }

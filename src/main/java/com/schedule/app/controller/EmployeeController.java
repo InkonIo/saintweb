@@ -49,4 +49,24 @@ public class EmployeeController {
     ) {
         return ResponseEntity.ok(employeeService.update(id, request));
     }
+
+    @PostMapping("/batch")
+    @Operation(summary = "Создать нескольких сотрудников")
+    public ResponseEntity<List<EmployeeResponse>> createBatch(
+            @RequestBody EmployeeRequest.Batch request) {
+        List<EmployeeResponse> result = request.getEmployees().stream()
+            .map(emp -> {
+                // Create record не имеет сеттера, создаём новый с branchId
+                EmployeeRequest.Create withBranch = new EmployeeRequest.Create(
+                    request.getBranchId(),
+                    emp.userId(),
+                    emp.firstName(),
+                    emp.lastName(),
+                    emp.position()
+                );
+                return employeeService.create(withBranch);
+            })
+            .collect(java.util.stream.Collectors.toList());
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    }
 }
