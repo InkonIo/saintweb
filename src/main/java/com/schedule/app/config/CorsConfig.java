@@ -20,7 +20,7 @@ public class CorsConfig {
             "https://saintweb-kappa.vercel.app",
             "https://saintweb-git-master-lokuis-projects.vercel.app",
             "https://saintweb-pw0ooiqu9-lokuis-projects.vercel.app",
-            "https://rococo-parfait-4a89ef.netlify.app/login"
+            "https://rococo-parfait-4a89ef.netlify.app"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
